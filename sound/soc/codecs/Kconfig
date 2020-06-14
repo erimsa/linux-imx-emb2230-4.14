@@ -943,7 +943,7 @@ config SND_SOC_TLV320AIC31XX
 
 config SND_SOC_TLV320AIC32X4
 	tristate
-
+	
 config SND_SOC_TLV320AIC32X4_I2C
 	tristate
 	depends on I2C
