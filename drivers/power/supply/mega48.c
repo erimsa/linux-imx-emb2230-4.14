@@ -240,7 +240,7 @@ static int read_wifi_mac_addr(void)
 	return 0;
 }
 
-static int board_poweroff(void)
+static void board_poweroff(void)
 {
 	DEBUG("MQ===================%s==============================\n", __FUNCTION__);
 	//ret = i2c_smbus_wirte_byte_data(client, 0x00, 0xaa);
@@ -258,18 +258,30 @@ static int board_poweroff(void)
 		else
 			DEBUG("********i2c(2) send data failed***********\n");
 	}
-	return ret;
+	//return ret;
 
 }
 
 unsigned char buffer[32];
-static ssize_t get_mac_id(struct device *dev,
-	struct device_attribute *attr, const char *buf, size_t count)
+
+static ssize_t get_mac_id_show(struct device *dev,
+	struct device_attribute *attr, char *buf)
 {
 	return sprintf(buf, "%02x:%02x:%02x:%02x:%02x:%02x",g_mac_addr[0],g_mac_addr[1],g_mac_addr[2],g_mac_addr[3],g_mac_addr[4],g_mac_addr[5]);
 }
 
-static DEVICE_ATTR(mac_id, S_IRUGO, get_mac_id, NULL);
+static DEVICE_ATTR(mac_id, S_IRUGO, get_mac_id_show, NULL);
+
+/*
+static struct device_attribute dev_attr_mac_id = {
+	.attr = {
+			.name = "mac_id",
+			.mode = S_IRUGO,
+	},
+	.show = get_mac_id,
+	.store = NULL,
+};
+*/
 
 struct kobject *mac_id_kobj1;
 
